@@ -1,10 +1,14 @@
 """
 shift_origin - Shift plot origin in x and/or y directions.
 """
+from contextlib import contextmanager
 
 from pygmt.clib import Session
+from pygmt.helpers import build_arg_string
+from pygmt.exceptions import GMTInvalidInput
 
 
+@contextmanager
 def shift_origin(self, xshift=None, yshift=None):
     """
     Shift plot origin in x and/or y directions.
@@ -13,28 +17,46 @@ def shift_origin(self, xshift=None, yshift=None):
     by (*xshift*, *yshift*). Optionally, append the length unit (**c**,
     **i**, or **p**). Default unit if not given is **c** for centimeters.
 
-    Prepend **a** to shift the origin back to the original position after
-    plotting, prepend **c** to center the plot on the center of the paper
-    (optionally add shift), prepend **f** to shift the origin relative to
-    the fixed lower left corner of the page, or prepend **r** [Default] to
-    move the origin relative to its current location.
-
-    Detailed usage at
-    :gmt-docs:`cookbook/options.html#plot-positioning-and-layout-the-x-y-options`
+    This method shifts the plot origin relative to the current origin by
+    *xshift* and *yshift* in x and y directions, respectively. Optionally,
+    append the length unit (**c** for centimeters, **i** for inches, or **p**
+    for points) to the shifts. Default unit if not given is **c**.
 
     Parameters
     ----------
-    xshift : str
+    xshift : float or str
         Shift plot origin in x direction.
-    yshift : str
+    yshift : float or str
         Shift plot origin in y direction.
+
+    Examples
+    --------
+    >>> import pygmt
+    >>> fig = pygmt.Figure()
+    >>> fig.basemap(region=[0, 10, 0, 10], projection="X10c/10c", frame=True)
+    >>> fig.shift_origin(xshift=12)
+    >>> fig.basemap(region=[0, 10, 0, 10], projection="X10c/10c", frame=True)
+    >>> fig.shift_origin(xshift="w+2c")
+    >>> fig.show()
     """
     self._preprocess()  # pylint: disable=protected-access
-    args = ["-T"]
-    if xshift:
-        args.append(f"-X{xshift}")
-    if yshift:
-        args.append(f"-Y{yshift}")
 
-    with Session() as lib:
-        lib.call_module(module="plot", args=" ".join(args))
+    kwargs = {"T": True}
+    if xshift:
+        kwargs["X"] = xshift
+    if yshift:
+        kwargs["Y"] = yshift
+
+    try:
+        with Session() as lib:
+            lib.call_module(module="plot", args=build_arg_string(kwargs))
+            saved_xshift = lib.get_common("X")  # False or xshift in inches
+            saved_yshift = lib.get_common("Y")  # False or yshift in inches
+            yield
+    finally:
+        if saved_xshift:
+            kwargs["X"] = f"{-1.0 * saved_xshift}i"
+        if saved_yshift:
+            kwargs["Y"] = f"{-1.0 * saved_yshift}i"
+        with Session() as lib:
+            lib.call_module(module="plot", args=build_arg_string(kwargs))
