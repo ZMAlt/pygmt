@@ -13,14 +13,36 @@ def shift_origin(self, xshift=None, yshift=None):
     """
     Shift plot origin in x and/or y directions.
 
-    This method shifts the plot origin relative to the current origin
-    by (*xshift*, *yshift*). Optionally, append the length unit (**c**,
-    **i**, or **p**). Default unit if not given is **c** for centimeters.
-
     This method shifts the plot origin relative to the current origin by
     *xshift* and *yshift* in x and y directions, respectively. Optionally,
     append the length unit (**c** for centimeters, **i** for inches, or **p**
     for points) to the shifts. Default unit if not given is **c**.
+
+    For *xshift*, a special character **w** can also be used, which represents
+    the bounding box width of previous plot. The full syntax is
+    [[±][*f*]\ **w**\ [/\ *d*\ ]±]\ *xoff*, where optional signs, factor *f* and
+    divisor *d* can be used to compute an offset that may be adjusted further
+    by ±*off*.
+
+    Similarity, *yshift* can in general be [[±][*f*]\ **h**\ [/\ *d*\ ]±]\ *yoff*,
+    in which **h** is the bounding box height of previous plot.
+
+    Shiftting plot origin can be performed permanently or temporarily, depending
+    on how the method is called.
+
+    1. Calling :meth:`Figure.shift_origin` directly will shift plot origin
+       permanently, which affects all subsequent plottings:
+
+       .. code-block::
+
+          Figure.shift_origin(xshift=..., yshift=...)
+
+    2. Calling :meth:`Figure.shift_origin` as a context manager:
+
+        .. code-block::
+
+            with Figure.shift_origin(xshift=..., yshift=...):
+                ...
 
     Parameters
     ----------
