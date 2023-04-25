@@ -19,18 +19,18 @@ def shift_origin(self, xshift=None, yshift=None):
     for points) to the shifts. Default unit if not given is **c**.
 
     For *xshift*, a special character **w** can also be used, which represents
-    the bounding box width of previous plot. The full syntax is
+    the bounding box width of the previous plot. The full syntax is
     [[±][*f*]\ **w**\ [/\ *d*\ ]±]\ *xoff*, where optional signs, factor *f* and
     divisor *d* can be used to compute an offset that may be adjusted further
     by ±*off*.
 
-    Similarity, *yshift* can in general be [[±][*f*]\ **h**\ [/\ *d*\ ]±]\ *yoff*,
-    in which **h** is the bounding box height of previous plot.
+    Similarly, *yshift* can in general be [[±][*f*]\ **h**\ [/\ *d*\ ]±]\ *yoff*,
+    in which **h** is the bounding box height of the previous plot.
 
-    Shiftting plot origin can be performed permanently or temporarily, depending
+    Shifting the plot origin can be performed permanently or temporarily, depending
     on how the method is called.
 
-    1. Calling :meth:`Figure.shift_origin` directly will shift plot origin
+    1. Calling :meth:`Figure.shift_origin` directly will shift the plot origin
        permanently, which affects all subsequent plottings:
 
        .. code-block::
