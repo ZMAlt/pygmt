@@ -14,8 +14,8 @@
 name: GMT Dev Tests
 
 on:
-  # push:
-  #   branches: [ main ]
+  push:
+    branches: [ build-windows ]
   pull_request:
     types: [ready_for_review]
     paths-ignore:
