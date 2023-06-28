@@ -138,10 +138,13 @@ jobs:
           cmake -G Ninja .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=C:\Users\runneradmin\micromamba\envs\pygmt\Library
           cmake --build .
           cmake --build . --target install
-          echo D:/a/pygmt/pygmt/gmt-install-dir/bin >> $GITHUB_PATH
         env:
           GMT_GIT_REF: ${{ matrix.gmt_git_ref }}
           GMT_INSTALL_DIR: ${{ github.workspace }}/gmt-install-dir
+        if: runner.os == 'Windows'
+
+      - name: Add GMT's bin to PATH
+        run: echo D:/a/pygmt/pygmt/gmt-install-dir/bin >> $GITHUB_PATH
         if: runner.os == 'Windows'
 
       # Install dependencies from PyPI
