@@ -130,7 +130,7 @@ jobs:
         run: |
           git clone --depth=1 --single-branch --branch master https://github.com/GenericMappingTools/gmt
           cd gmt/
-          echo set (CMAKE_INSTALL_PREFIX "D:/a/pygmt/pygmt/gmt-install-dir") > cmake/ConfigUser.cmake
+          echo set (CMAKE_INSTALL_PREFIX '${{ github.workspace }}/gmt-install-dir') > cmake/ConfigUser.cmake
           cat cmake/ConfigUser.cmake
           mkdir build
           cd build
@@ -144,7 +144,7 @@ jobs:
         if: runner.os == 'Windows'
 
       - name: Add GMT's bin to PATH
-        run: echo D:/a/pygmt/pygmt/gmt-install-dir/bin >> $GITHUB_PATH
+        run: echo '${{ github.workspace }}/gmt-install-dir/bin' >> $GITHUB_PATH
         if: runner.os == 'Windows'
 
       # Install dependencies from PyPI
