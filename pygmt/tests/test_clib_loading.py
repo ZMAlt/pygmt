@@ -286,6 +286,7 @@ def test_clib_full_names_gmt_library_path_undefined_path_included(
         assert isinstance(lib_fullpaths, types.GeneratorType)
         # Windows: find_library() searches the library in PATH, so one more
         npath = 2 if sys.platform == "win32" else 1
+        print(sys.platform)
         print(list(lib_fullpaths))
         print([gmt_lib_realpath] * npath + gmt_lib_names)
         assert list(lib_fullpaths) == [gmt_lib_realpath] * npath + gmt_lib_names
