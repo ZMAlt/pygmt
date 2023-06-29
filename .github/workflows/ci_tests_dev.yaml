@@ -186,7 +186,11 @@ jobs:
 
       # Run the tests
       - name: Test with pytest
-        run: make test PYTEST_EXTRA="-r P"
+        run: |
+          gmt --version
+          which gmt
+          gmt --show-library
+          make test PYTEST_EXTRA="-r P"
         env:
           GMT_LIBRARY_PATH: ${{ github.workspace }}/gmt-install-dir/lib
 
