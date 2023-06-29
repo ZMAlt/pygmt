@@ -288,6 +288,7 @@ def test_clib_full_names_gmt_library_path_undefined_path_included(
         npath = 2 if sys.platform == "win32" else 1
         print(sys.platform)
         if sys.platform == "win32":
+            from ctypes.util import find_library
             print(find_library("gmt.dll"))
         print(list(lib_fullpaths))
         print([gmt_lib_realpath] * npath + gmt_lib_names)
