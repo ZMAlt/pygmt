@@ -126,7 +126,7 @@ jobs:
       - name: Install GMT ${{ matrix.gmt_git_ref }} branch (Windows)
         shell: cmd
         run: |
-          git clone --depth=1 --single-branch --branch %GMT_GIT_REF https://github.com/GenericMappingTools/gmt
+          git clone --depth=1 --single-branch --branch %GMT_GIT_REF% https://github.com/GenericMappingTools/gmt
           cd gmt/
           mkdir build
           cd build
