@@ -280,15 +280,13 @@ def test_clib_full_names_gmt_library_path_undefined_path_included(
     """
     with monkeypatch.context() as mpatch:
         mpatch.delenv("GMT_LIBRARY_PATH", raising=False)
-        mpatch.setenv("PATH", gmt_bin_dir)
+        mpatch.setenv("PATH", f"{gmt_bin_dir}:{gmt_bin_dir.replace('bin', 'lib')}")
         lib_fullpaths = clib_full_names()
 
         assert isinstance(lib_fullpaths, types.GeneratorType)
         # Windows: find_library() searches the library in PATH, so one more
         npath = 2 if sys.platform == "win32" else 1
         print(sys.platform)
-        import subprocess as sp
-        print(sp.check_output(["gmt", "--show-library"], encoding="utf-8"))
         if sys.platform == "win32":
             from ctypes.util import find_library
             print(find_library("gmt.dll"))
