@@ -287,6 +287,9 @@ def test_clib_full_names_gmt_library_path_undefined_path_included(
         # Windows: find_library() searches the library in PATH, so one more
         npath = 2 if sys.platform == "win32" else 1
         print(sys.platform)
+        import subprocess as sp
+        print(sp.check_output(["gmt"]))
+        print(sp.check_output(["gmt", "--show-library"]))
         if sys.platform == "win32":
             from ctypes.util import find_library
             print(find_library("gmt.dll"))
