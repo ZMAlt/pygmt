@@ -280,7 +280,7 @@ def test_clib_full_names_gmt_library_path_undefined_path_included(
     """
     with monkeypatch.context() as mpatch:
         mpatch.delenv("GMT_LIBRARY_PATH", raising=False)
-        mpatch.setenv("PATH", f"{gmt_bin_dir}:{gmt_bin_dir.replace('bin', 'lib')}")
+        mpatch.setenv("PATH", f"{gmt_bin_dir};{gmt_bin_dir.replace('bin', 'lib')}")
         lib_fullpaths = clib_full_names()
 
         assert isinstance(lib_fullpaths, types.GeneratorType)
