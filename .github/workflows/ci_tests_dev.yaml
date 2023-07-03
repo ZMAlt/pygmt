@@ -126,7 +126,7 @@ jobs:
       - name: Install GMT ${{ matrix.gmt_git_ref }} branch (Windows)
         shell: cmd
         run: |
-          git clone --depth=1 --single-branch --branch master https://github.com/GenericMappingTools/gmt
+          git clone --depth=1 --single-branch --branch %GMT_GIT_REF https://github.com/GenericMappingTools/gmt
           cd gmt/
           mkdir build
           cd build
@@ -140,7 +140,9 @@ jobs:
         if: runner.os == 'Windows'
 
       - name: Add GMT's bin to PATH
-        run: echo '${{ github.workspace }}/gmt-install-dir/bin' >> $GITHUB_PATH
+        run: |
+          echo '${{ github.workspace }}/gmt-install-dir/bin' >> $GITHUB_PATH
+          echo '${{ github.workspace }}/gmt-install-dir/lib' >> $GITHUB_PATH
         if: runner.os == 'Windows'
 
       # Install dependencies from PyPI
