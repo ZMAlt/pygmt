@@ -114,7 +114,7 @@ def clib_full_names(env=None):
         for libname in libnames:
             libfullpath = Path(libpath) / libname
             if libfullpath.exists():
-                print(str(libfullname))
+                print(str(libfullpath))
                 yield str(libfullpath)
 
     # 2. Search for the library returned by command "gmt --show-library"
