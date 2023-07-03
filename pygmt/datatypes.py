@@ -24,6 +24,9 @@ gmt_grdfloat = ctp.c_float
 class GMT_GRID_HEADER(ctp.Structure):
     """
     Structure for GMT grid header.
+
+    See https://docs.generic-mapping-tools.org/dev/devdocs/api.html#gmt-grid
+    for definition.
     """
 
     _fields_ = [
@@ -74,6 +77,9 @@ class GMT_GRID_HEADER(ctp.Structure):
 class GMT_GRID(ctp.Structure):
     """
     Structure for GMT grid.
+
+    See https://docs.generic-mapping-tools.org/dev/devdocs/api.html#gmt-grid
+    for definition.
 
     Examples
     --------
