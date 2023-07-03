@@ -105,6 +105,7 @@ def clib_full_names(env=None):
         env = os.environ
 
     libnames = clib_names(os_name=sys.platform)  # e.g. libgmt.so, libgmt.dylib, gmt.dll
+    print("libnames:", libnames)
 
     # Search for the library in different ways, sorted by priority.
     # 1. Search for the library in GMT_LIBRARY_PATH if defined.
@@ -113,6 +114,7 @@ def clib_full_names(env=None):
         for libname in libnames:
             libfullpath = Path(libpath) / libname
             if libfullpath.exists():
+                print(str(libfullname))
                 yield str(libfullpath)
 
     # 2. Search for the library returned by command "gmt --show-library"
@@ -122,11 +124,13 @@ def clib_full_names(env=None):
             sp.check_output(["gmt", "--show-library"], encoding="utf-8").rstrip("\n")
         )
         assert libfullpath.exists()
+        print(str(libfullpath))
         yield str(libfullpath)
     except (FileNotFoundError, AssertionError, sp.CalledProcessError):
         # the 'gmt' executable  is not found
         # the gmt library is not found
         # the 'gmt' executable is broken
+        print("Exception")
         pass
 
     # 3. Search for DLLs in PATH by calling find_library() (Windows only)
@@ -134,10 +138,12 @@ def clib_full_names(env=None):
         for libname in libnames:
             libfullpath = find_library(libname)
             if libfullpath:
+                print(libfullpath)
                 yield libfullpath
 
     # 4. Search for library names in the system default path
     for libname in libnames:
+        print(libname)
         yield libname
 
 
